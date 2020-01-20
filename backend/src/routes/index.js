@@ -1,4 +1,4 @@
+const categoryRoutes = require('./categories.routes');
 const userRoutes = require('./users.routes');
-const catallogRoutes = require('./catallog.routes');
 
-module.exports = [userRoutes, catallogRoutes];
+module.exports = [userRoutes, categoryRoutes];
