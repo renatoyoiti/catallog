@@ -11,11 +11,19 @@ module.exports = {
   async destroy(req, res) {
     const { _id } = req.params;
 
-    const { deletedCount } = await User.deleteOne({ _id });
+    const { deletedCount } = await User.deleteOne({ _id }, err => {
+      if (err) {
+        return res.json({
+          status: 204,
+          message: 'User not found.',
+        });
+      }
+      return this;
+    });
 
     if (deletedCount === 0) {
       return res.json({
-        status: 401,
+        status: 500,
         message: 'It was not possible to delete the user',
       });
     }
@@ -27,7 +35,15 @@ module.exports = {
   async show(req, res) {
     const { _id } = req.params;
 
-    const user = await User.findOne({ _id });
+    const user = await User.findOne({ _id }, err => {
+      if (err) {
+        return res.json({
+          status: 204,
+          message: 'User not found.',
+        });
+      }
+      return this;
+    });
 
     return res.json(user);
   },
@@ -35,13 +51,17 @@ module.exports = {
     const { name, email, password } = req.body;
 
     let user = await User.findOne({ email });
-    if (!user) {
-      user = await User.create({
-        name,
-        email,
-        password_hash: password,
+    if (user) {
+      return res.json({
+        status: 201,
+        message: 'E-mail already registered. Please insert another one.',
       });
     }
+    user = await User.create({
+      name,
+      email,
+      password_hash: password,
+    });
 
     return res.json({
       user,
@@ -51,20 +71,28 @@ module.exports = {
     const { name, email, password } = req.body;
     const { _id } = req.params;
 
-    const user = await User.findOne({ _id });
-    await user.update(
+    const user = await User.findOneAndUpdate(
+      { _id },
       {
         name,
         email,
         password,
       },
-      {
-        new: true,
+      { new: true },
+      err => {
+        if (err) {
+          return res.json({
+            status: 204,
+            message: 'User not found',
+          });
+        }
+        return this;
       }
     );
 
     return res.json({
       message: 'User updated.',
+      status: 201,
       user,
     });
   },

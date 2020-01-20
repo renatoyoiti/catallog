@@ -7,6 +7,6 @@ routes.delete('/users/:_id', UserController.destroy);
 routes.get('/users/:_id', UserController.show);
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
-routes.put('/users/:_id', UserController.store);
+routes.put('/users/:_id', UserController.update);
 
 module.exports = routes;
