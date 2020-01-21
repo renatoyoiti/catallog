@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 const File = require('../models/FileSchema');
 
 module.exports = {
