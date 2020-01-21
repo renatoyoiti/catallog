@@ -1,4 +1,4 @@
-const Category = require('../models/CategoriesSchema');
+const Category = require('../models/CategorySchema');
 
 module.exports = {
   async index(req, res) {
