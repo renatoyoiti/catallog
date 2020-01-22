@@ -18,19 +18,21 @@ module.exports = {
       message: 'File deleted',
     });
   },
-  async store(req, res) {
-    const { originalname: name, key, location: url = '', size } = req.file;
+  async store(reqFile, productId) {
+    const { originalname: name, key, location: url = '', size } = reqFile;
 
     const file = await File.create({
       name,
       key,
       url,
       size,
+      product_id: productId,
     });
 
-    return res.json({
-      message: 'ok',
-      file,
-    });
+    if (file) {
+      return file;
+    }
+
+    return null;
   },
 };

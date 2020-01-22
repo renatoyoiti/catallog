@@ -23,6 +23,10 @@ const FileSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  product_id: {
+    type: String,
+    required: true,
+  },
   created_at: {
     type: Date,
     default: Date.now,
