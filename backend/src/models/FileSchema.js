@@ -9,11 +9,9 @@ const s3 = new aws.S3();
 const FileSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   key: {
     type: String,
-    required: true,
     unique: true,
   },
   url: {
@@ -21,11 +19,9 @@ const FileSchema = new mongoose.Schema({
   },
   size: {
     type: Number,
-    required: true,
   },
   product_id: {
     type: String,
-    required: true,
   },
   created_at: {
     type: Date,
