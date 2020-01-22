@@ -71,6 +71,7 @@ module.exports = {
       details,
     });
 
+    // eslint-disable-next-line no-underscore-dangle
     const file = await FileController.store(req.file, product._id);
 
     if (!file) {
